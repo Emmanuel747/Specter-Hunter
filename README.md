@@ -1,39 +1,26 @@
-# Specter-Hunter
-Small unity game built by team SideKick Games at LSU during the Spring 2023 semester.
-
 Specter Hunter
-Specter Hunter is a 3D Pac-Man style game developed using Unity game engine. In this game, the player controls a ghost hunter and must navigate through a maze-like environment while avoiding ghosts and collecting pellets. The game has three levels, each with its unique maze design and increasing difficulty.
+Specter Hunter is a Pac-Man style game where the player navigates through a maze collecting pellets while avoiding ghosts. The game features a top-down view and allows the player to control Pac-Man using arrow keys or on-screen buttons on mobile devices.
 
-Game Features
-Simple and intuitive gameplay mechanics inspired by Pac-Man.
-Customizable controls: The player can use either arrow keys or WASD to move the character.
-Dynamic camera that follows the player and adjusts its position based on the player's movement.
-Score tracking: The game tracks the player's score based on the number of pellets consumed and displays it in real-time.
-Audio: Background music and sound effects enhance the gaming experience.
-Pause and resume: The player can pause and resume the game at any time.
-Final score screen: The game displays the final score, completion percentage, and game timer when the player completes the game.
-Mute button: The player can mute the background music during gameplay.
+Gameplay
+The player must navigate through the maze while collecting pellets to increase their score. The game features four different types of pellets:
+
+Normal Pellets: Adds 10 points to the score
+Power Pellets: Adds 50 points to the score and allows Pac-Man to eat ghosts for a short time
+Speed Pellets: Doubles Pac-Man's speed for a short time
+Slowdown Pellets: Halves Pac-Man's speed for a short time
+The player must avoid contact with the ghosts, who will attempt to collide with Pac-Man, causing the player to lose a life. The game ends when the player has lost all of their lives.
+
 Future Improvements
-Add power-ups: power-ups can include invincibility, speed boosts, or other bonuses.
-Add additional levels: adding more levels will increase the game's replayability and increase the difficulty for advanced players.
-Add different ghost types: Different ghost types with varying abilities will make the game more challenging.
-Add a multiplayer mode: A multiplayer mode that allows two players to compete against each other would add a new dimension to the game.
-Team
-To improve and develop the Specter Hunter game further, the following teammates are required:
+Future improvements to the game could include:
 
-Game designer: responsible for designing new levels, creating game mechanics, and balancing gameplay.
-UI/UX designer: responsible for designing the user interface and user experience of the game.
-Artist: responsible for creating art assets such as characters, backgrounds, and animations.
-Programmer: responsible for implementing new features and improving the game's performance.
-Installation
-To play Specter Hunter:
+Adding more levels with different mazes and enemy placements
+Implementing a high score system to allow players to compete with each other for the highest score
+Adding power-ups and collectibles to the game to provide additional challenges and rewards for the player
+Creating different game modes, such as time trials or survival modes
+Team Requirements
+To improve the game over the next two months, the development team will need:
 
-Clone the repository to your local machine.
-Open the project in Unity game engine.
-Build the project to the desired platform.
-Run the executable file.
-License
-Specter Hunter is licensed under the MIT license. See LICENSE for more information.
-
-Credits
-Specter Hunter was developed by [Your Name]. Music and sound effects were provided by [Name of Audio Resource]. The game assets were created by [Name of Graphic Designer]. Special thanks to [Name of Person or Team] for their contributions to the project.
+A game designer to help create new levels and game modes
+A programmer to implement new features and improve gameplay mechanics
+An artist to create new visual assets, including new maze designs and enemy sprites
+A sound designer to create new sound effects and music for the game
