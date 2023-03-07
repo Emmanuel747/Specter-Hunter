@@ -13,6 +13,9 @@ public class PacMovementV2 : MonoBehaviour
   public float fallMultiplier = 2.5f; // The multiplier applied to the fall speed
   public float strafeForce = 20f; // The force applied for strafing
 
+  public UnityEngine.AI.NavMeshAgent enemy;
+  public Transform Player;
+
   private Vector3 initialMousePosition;
   // private bool mouseRightClickHeld = false;
   
@@ -82,6 +85,9 @@ public class PacMovementV2 : MonoBehaviour
     {
       rb.AddForce(transform.forward * strafeForce * moveForce, ForceMode.Force);
     }
+
+    // sending tracking data to enemy
+      enemy.SetDestination(Player.position);
   }
 
   // Reset jump count when Pacman lands on the ground
@@ -93,7 +99,7 @@ public class PacMovementV2 : MonoBehaviour
       }
 
       // HardMode Game Mechanic where hitting walls = -10 score
-      if (collision.gameObject.tag == "Wall")
+      if (collision.gameObject.tag == "wall")
       {
         scoreScript.playerScoreDEC(10);
       }
@@ -111,12 +117,13 @@ public class PacMovementV2 : MonoBehaviour
     }
   }
 
+
+
+
   // public bool IsMoving() {
-  //   return rb.velocity != Vector3.zero; 
+  //   return rb.velocity != Vector3.zero;  
   // }
 }
-
-
     // [Work in Progress] Rotate based on mouse right-click drag direction
     // if (Input.GetMouseButtonDown(1))
     // {
