@@ -5,16 +5,8 @@ using UnityEngine.EventSystems;
 
 public class PacMovementV2 : MonoBehaviour
 {
-  public float moveForce = 1.5f; // The force applied to the object
-  public float moveSpeed = 27f; // The speed at which Pacman moves
-  public float maxSpeed = 35f; // The maximum speed Pacman can reach
-  public float rotateSpeed = 0.5f; // The speed at which Pacman rotates
-  public float jumpForce = 150f; // The force applied to the jump
   public float fallMultiplier = 2.5f; // The multiplier applied to the fall speed
   public float strafeForce = 20f; // The force applied for strafing
-
-  public UnityEngine.AI.NavMeshAgent enemy;
-  public Transform Player;
 
   private Vector3 initialMousePosition;
   // private bool mouseRightClickHeld = false;
@@ -26,68 +18,78 @@ public class PacMovementV2 : MonoBehaviour
 
   private Score scoreScript; // Outside script variable
 
+  public Camera playerCamera;
+  public float walkSpeed = 6f;
+  public float runSpeed = 12f;
+  public float jumpPower = 7f;
+  public float gravity = 10f;
+
+
+  public float lookSpeed = 2f;
+  public float lookXLimit = 45f;
+
+  public float health = 100f;
+
+
+  Vector3 moveDirection = Vector3.zero;
+  float rotationX = 0;
+
+  public bool canMove = true;
+
+  CharacterController characterController;
+
   void Start()
   {
     rb = GetComponent<Rigidbody>();
     scoreScript = GameObject.Find("ScoreContainerCanvas").GetComponent<Score>();
+    characterController = GetComponent<CharacterController>();
+    Cursor.lockState = CursorLockMode.Locked;
+    Cursor.visible = false;
   }
 
   void Update()
   {
-    // Limit the maximum speed
-    if (rb.velocity.magnitude > maxSpeed)
-    {
-      rb.velocity = rb.velocity.normalized * maxSpeed;
-    }
+        #region Handles Movment
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+        Vector3 right = transform.TransformDirection(Vector3.right);
 
-    // Move forwards and backwards based on current rotation
-    if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.RightArrow))
-    {
-        rb.AddForce((-transform.right * moveSpeed) * moveForce, ForceMode.Force);
-    }
-    else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-    {
-        rb.AddForce((transform.right * moveSpeed) * moveForce, ForceMode.Force);
-    }
+        // Press Left Shift to run
+        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
+        float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+        float movementDirectionY = moveDirection.y;
+        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-    // Rotate left and right on Y axis
-    if (Input.GetKey(KeyCode.A))
-    {
-        transform.Rotate(0f, -rotateSpeed, 0f);
-    }
-    else if (Input.GetKey(KeyCode.D))
-    {
-        transform.Rotate(0f, rotateSpeed, 0f);
-    }
+        #endregion
 
-    // Increase fall speed
-    if (rb.velocity.y < 0)
-    {
-        rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-    }
-
-    // Double jump on press of spacebar
-    if (Input.GetKeyDown(KeyCode.Space))
-    {
-        if (jumpCount < 2)
+        #region Handles Jumping
+        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {
-            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-            jumpCount++;
+            moveDirection.y = jumpPower;
         }
-    }
-  
-    // Strafe left and right
-    if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow))
-    {
-        rb.AddForce(-transform.forward* strafeForce * moveForce, ForceMode.Force);
-    }
-    else if (Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.RightArrow))
-    {
-      rb.AddForce(transform.forward * strafeForce * moveForce, ForceMode.Force);
-    }
+        else
+        {
+            moveDirection.y = movementDirectionY;
+        }
 
-    // sending tracking data to enemy
-      enemy.SetDestination(Player.position);
+        if (!characterController.isGrounded)
+        {
+            moveDirection.y -= gravity * Time.deltaTime;
+        }
+
+        #endregion
+
+        #region Handles Rotation
+        characterController.Move(moveDirection * Time.deltaTime);
+
+        if (canMove)
+        {
+            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+        }
+        #endregion
   }
 
   // Reset jump count when Pacman lands on the ground
@@ -99,7 +101,7 @@ public class PacMovementV2 : MonoBehaviour
       }
 
       // HardMode Game Mechanic where hitting walls = -10 score
-      if (collision.gameObject.tag == "wall")
+      if (collision.gameObject.tag == "Wall")
       {
         scoreScript.playerScoreDEC(10);
       }
@@ -117,13 +119,12 @@ public class PacMovementV2 : MonoBehaviour
     }
   }
 
-
-
-
   // public bool IsMoving() {
-  //   return rb.velocity != Vector3.zero;  
+  //   return rb.velocity != Vector3.zero; 
   // }
 }
+
+
     // [Work in Progress] Rotate based on mouse right-click drag direction
     // if (Input.GetMouseButtonDown(1))
     // {
