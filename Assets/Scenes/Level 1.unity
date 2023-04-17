@@ -106,15 +106,15 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
-    agentHeight: 2
+    agentRadius: 3.93
+    agentHeight: 8.65
     agentSlope: 45
-    agentClimb: 0.4
+    agentClimb: 4.56
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 1.3100001
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -3440,7 +3440,7 @@ GameObject:
   m_Name: GameFloor
   m_TagString: Ground
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
+  m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &239534144
@@ -3451,7 +3451,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239534143}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.17, y: 0.0183, z: 0}
+  m_LocalPosition: {x: 0.17, y: 0.0187, z: 0}
   m_LocalScale: {x: 0.11, y: 0.0045, z: 0.13802347}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7881,7 +7881,7 @@ MonoBehaviour:
   runSpeedMultiplier: 4
   animator: {fileID: 551292048}
   aniScaleSizeFloat: 16
-  gameOverOn: 1
+  gameOverOn: 0
 --- !u!1 &556544330
 GameObject:
   m_ObjectHideFlags: 0
@@ -21711,7 +21711,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1494003846
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27160,11 +27160,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147779521350}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 672e2611b6336944595b4a5d553d6cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pacMan: {fileID: 116695427863166774}
+  animator: {fileID: 1869550081}
+  navAgent: {fileID: 919132147779521354}
+  moveSpeed: 14
+  runSpeedMultiplier: 5
+  aniScaleSizeFloat: 16
+  gameOverOn: 0
 --- !u!95 &1869550081
 Animator:
   serializedVersion: 5
@@ -30487,7 +30494,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116695427863166774}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -81.97, y: 91.06, z: 8}
+  m_LocalPosition: {x: -81.97, y: 0.7, z: 8}
   m_LocalScale: {x: 2.9994426, y: 3.6345513, z: 4.656569}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30507,7 +30514,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147779521350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 68.4, y: -0.63, z: 8.2}
+  m_LocalPosition: {x: 79.1, y: -1.6, z: -0.3}
   m_LocalScale: {x: 17.390886, y: 17.390886, z: 17.390886}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30614,7 +30621,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7882376021929707696}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: -0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30821,7 +30828,10 @@ GameObject:
   - component: {fileID: 1869550080}
   - component: {fileID: 919132147779521353}
   - component: {fileID: 919132147779521351}
+  - component: {fileID: 919132147779521356}
   - component: {fileID: 919132147779521352}
+  - component: {fileID: 919132147779521354}
+  - component: {fileID: 919132147779521355}
   m_Layer: 0
   m_Name: X Bot
   m_TagString: Untagged
@@ -30838,7 +30848,7 @@ BoxCollider:
   m_GameObject: {fileID: 919132147779521350}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.87, y: 2.24, z: 1}
   m_Center: {x: 0, y: 1.16, z: 0}
@@ -30868,10 +30878,59 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!195 &919132147779521354
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147779521350}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 10
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &919132147779521355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147779521350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c61907bb865b8459e37ebb758c0412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goal: {fileID: 543060659277084230}
+--- !u!136 &919132147779521356
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147779521350}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.18
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.58, z: 0}
 --- !u!1 &919132148885816657
 GameObject:
   m_ObjectHideFlags: 0
@@ -31014,7 +31073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1031632034305689429
 Transform:
   m_ObjectHideFlags: 0
@@ -32124,7 +32183,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116695427863166774}
   serializedVersion: 2
-  m_Mass: 12.47
+  m_Mass: 7
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -32157,17 +32216,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3d08c510f5b9c44b9a020b2ac1a341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveForce: 5
-  moveSpeed: 35
-  maxSpeed: 50
-  rotateSpeed: 0.5
-  jumpForce: 150
-  fallMultiplier: 2.5
-  strafeForce: 40
+  moveForce: 0.8
+  moveSpeed: 10.77
+  maxSpeed: 14.76
+  rotateSpeed: 1.5
+  jumpForce: 100
+  fallMultiplier: 50
+  strafeForce: 10
   enemy: {fileID: 0}
   Player: {fileID: 543060659277084230}
-  consumedPellets: 0
-  rotSpeed: 5
+  consumedPellets: 166
+  rotSpeed: 1
 --- !u!82 &2877487270579078623
 AudioSource:
   m_ObjectHideFlags: 0
