@@ -7,6 +7,8 @@ public class nonGhostController : MonoBehaviour {
   public GameObject pacMan;
   public Animator animator;
   public NavMeshAgent navAgent;
+  public AudioSource audioSource;
+  public AudioClip intensityIncrease;
 
   // public options for devs to set during testing
   public float moveSpeed = 14f;
@@ -23,14 +25,16 @@ public class nonGhostController : MonoBehaviour {
       navAgent = GetComponent<NavMeshAgent>();
       navAgent.updateRotation = false;
       navAgent.enabled = true;
+      audioSource = GetComponent<AudioSource>();
   }
 
   private void Update() {
    
     
-    if (scoreScript.GetCompletionPercentage() > 35f) {
+    if (scoreScript.GetCompletionPercentage() > 2f) {
       navAgent.isStopped = false;
       Debug.Log("2nd Enemy Released");
+      audioSource.PlayOneShot(intensityIncrease);
     }
     else {
       navAgent.isStopped = true;
