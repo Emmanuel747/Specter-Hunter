@@ -5,13 +5,13 @@ using UnityEngine.EventSystems;
 
 public class PacMovementV2 : MonoBehaviour
 {
-  public float moveForce = 1.5f; // The force applied to the object
-  public float moveSpeed = 27f; // The speed at which Pacman moves
-  public float maxSpeed = 35f; // The maximum speed Pacman can reach
-  public float rotateSpeed = 0.5f; // The speed at which Pacman rotates
-  public float jumpForce = 150f; // The force applied to the jump
-  public float fallMultiplier = 2.5f; // The multiplier applied to the fall speed
-  public float strafeForce = 20f; // The force applied for strafing
+  public float moveForce = 0.8f; // The force applied to the object
+  public float moveSpeed = 7f; // The speed at which Pacman moves
+  public float maxSpeed = 8.9f; // The maximum speed Pacman can reach
+  public float rotateSpeed = 1.5f; // The speed at which Pacman rotates
+  public float jumpForce = 100f; // The force applied to the jump
+  public float fallMultiplier = 50f; // The multiplier applied to the fall speed
+  public float strafeForce = 10f; // The force applied for strafing
 
   public UnityEngine.AI.NavMeshAgent enemy;
   public Transform Player;
@@ -20,9 +20,9 @@ public class PacMovementV2 : MonoBehaviour
   // private bool mouseRightClickHeld = false;
   
   private Rigidbody rb; // The Rigidbody component of Pacman
-  private int jumpCount = 0;
+  private int jumpCount = 1;
   public int consumedPellets = 0;
-  public float rotSpeed = 5 ;
+  public float rotSpeed = 1 ;
 
   private Score scoreScript; // Outside script variable
 
@@ -32,22 +32,23 @@ public class PacMovementV2 : MonoBehaviour
     scoreScript = GameObject.Find("ScoreContainerCanvas").GetComponent<Score>();
   }
 
-  void Update()
-  {
+void Update()
+{
     // Limit the maximum speed
     if (rb.velocity.magnitude > maxSpeed)
     {
-      rb.velocity = rb.velocity.normalized * maxSpeed;
+        rb.velocity = rb.velocity.normalized * maxSpeed;
     }
 
     // Move forwards and backwards based on current rotation
-    if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.RightArrow))
+    Vector3 moveDirection = Vector3.zero;
+    if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
     {
-        rb.AddForce((-transform.right * moveSpeed) * moveForce, ForceMode.Force);
+        moveDirection -= transform.right;
     }
     else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
     {
-        rb.AddForce((transform.right * moveSpeed) * moveForce, ForceMode.Force);
+        moveDirection += transform.right;
     }
 
     // Rotate left and right on Y axis
@@ -58,6 +59,14 @@ public class PacMovementV2 : MonoBehaviour
     else if (Input.GetKey(KeyCode.D))
     {
         transform.Rotate(0f, rotateSpeed, 0f);
+    }
+
+    // Apply movement force only if W, A, S, D are pressed
+    if (moveDirection != Vector3.zero)
+    {
+        rb.AddForce(moveDirection * moveSpeed * moveForce, ForceMode.VelocityChange);
+    } else if (jumpCount == 0) {
+      rb.velocity = Vector3.zero;
     }
 
     // Increase fall speed
@@ -75,20 +84,20 @@ public class PacMovementV2 : MonoBehaviour
             jumpCount++;
         }
     }
-  
+
     // Strafe left and right
     if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow))
     {
-        rb.AddForce(-transform.forward* strafeForce * moveForce, ForceMode.Force);
+        rb.AddForce(-transform.forward * strafeForce * moveForce, ForceMode.VelocityChange);
     }
     else if (Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.RightArrow))
     {
-      rb.AddForce(transform.forward * strafeForce * moveForce, ForceMode.Force);
+        rb.AddForce(transform.forward * strafeForce * moveForce, ForceMode.VelocityChange);
     }
 
     // sending tracking data to enemy
-      enemy.SetDestination(Player.position);
-  }
+    enemy.SetDestination(Player.position);
+}
 
   // Reset jump count when Pacman lands on the ground
   void OnCollisionEnter(Collision collision)
@@ -116,38 +125,4 @@ public class PacMovementV2 : MonoBehaviour
       Destroy(Other.gameObject);
     }
   }
-
-
-
-
-  // public bool IsMoving() {
-  //   return rb.velocity != Vector3.zero;  
-  // }
 }
-    // [Work in Progress] Rotate based on mouse right-click drag direction
-    // if (Input.GetMouseButtonDown(1))
-    // {
-    //     mouseRightClickHeld = true;
-    //     initialMousePosition = Input.mousePosition;
-    //     Debug.Log(initialMousePosition);
-    // }
-    // else if (Input.GetMouseButtonUp(1))
-    // {
-    //     mouseRightClickHeld = false;
-    // }
-
-    // if (mouseRightClickHeld)
-    // {
-    //   Vector3 currentMousePosition = Input.mousePosition;
-    //   float rotationSpeed = (currentMousePosition - initialMousePosition).magnitude * 0.01f;
-    //   // rotateSpeed = rotationSpeed <
-      
-    //   Vector3 rotationDirection = (currentMousePosition.x < initialMousePosition.x) ? -transform.right : transform.right;
-    //   // mouseRotation = rotationDirection.x * rotationSpeed
-    //   Debug.Log(rotationDirection);
-    //   // transform.Rotate(0f, rotationDirection.x * 0.3f, 0f, Space.Self);
-    //   if (rotationDirection.x > 0) {
-    //     transform.Rotate(0f, rotateSpeed, 0f);
-    //   } else transform.Rotate(0f, -rotateSpeed, 0f);
-
-    // }
