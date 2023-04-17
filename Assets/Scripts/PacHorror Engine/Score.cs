@@ -55,24 +55,7 @@ public class Score : MonoBehaviour {
     PlayerPrefs.SetFloat("FinalTime", gameTimer);
   }
 
-  // public methods to output the protected values to other scripts 
-  // public void playerScoreValue() {
-    
-  //     scoreValue = PlayerPrefs.GetInt("FinalScore");
-  //     completionPercentage = PlayerPrefs.GetFloat("FinalCompletion");
-  //     gameTimer = PlayerPrefs.GetFloat("FinalTime");
-  //     Debug.Log("---Presistant Values---");
-  //     Debug.Log(scoreValue);
-  //     Debug.Log(gameTimer);
-  //     Debug.Log(completionPercentage);
 
-  //   scoreText.SetText("Score \n" + (scoreValue.ToString("0")));
-  //   scoreShadow.SetText("Score \n" + (scoreValue.ToString("0")));
-  //   progressText.SetText((completionPercentage).ToString("0.00") + "% Completed");
-  // }
-  
-  // returns float value of player map level completion
-  
   public void playerCompletionValue() {
     progressText.SetText((completionPercentage).ToString("0.00") + "% Completed");
   }
@@ -103,4 +86,9 @@ public class Score : MonoBehaviour {
   public void UpdateTimerText() {
     Game_Timer.SetText(Mathf.FloorToInt(gameTimer / 60).ToString("00") + ":" + (gameTimer % 60).ToString("00"));
   }
+
+  public float GetCompletionPercentage() {
+      return completionPercentage;
+  }
+
 }

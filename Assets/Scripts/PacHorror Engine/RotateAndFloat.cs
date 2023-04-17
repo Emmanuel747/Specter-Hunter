@@ -4,41 +4,31 @@ public class RotateAndFloat : MonoBehaviour
 {
     public float rotationSpeed = 24.85f;
     public float floatSpeed = 1.3f;
-    public float floatAmplitude = 0.002f;
+    public float floatAmplitude = 0.0015f;
 
-    private Vector3[] initialPositions;
+    private Vector3 initialPosition;
 
     private void Start()
     {
-        // Get the initial positions of the child objects
-        int childCount = transform.childCount;
-        initialPositions = new Vector3[childCount];
-        for (int i = 0; i < childCount; i++)
-        {
-            initialPositions[i] = transform.GetChild(i).localPosition;
-        }
+        initialPosition = transform.localPosition;
     }
 
     private void Update()
     {
-        foreach (Transform child in transform)
-        {
-            // Rotate child object on y-axis
-            child.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        // Rotate pellet on y-axis
+        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
 
-            // Add floating effect
-            int childIndex = child.GetSiblingIndex();
-            Vector3 childPos = initialPositions[childIndex];
-            childPos.y += Mathf.Sin(Time.time * floatSpeed + child.GetInstanceID()) * floatAmplitude;
-            child.localPosition = childPos;
-        }
+        // Add floating effect
+        Vector3 pelletPos = initialPosition;
+        pelletPos.y += Mathf.Sin(Time.time * floatSpeed + transform.GetInstanceID()) * floatAmplitude;
+        transform.localPosition = pelletPos;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Pacman"))
+        if (other.CompareTag("Pellet"))
         {
-            Destroy(gameObject);
+            Destroy(other.gameObject);
         }
     }
 }
