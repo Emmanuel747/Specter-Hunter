@@ -13,6 +13,9 @@ public class PacMovementV2 : MonoBehaviour
   public float fallMultiplier = 50f; // The multiplier applied to the fall speed
   public float strafeForce = 10f; // The force applied for strafing
 
+  public AudioSource proximitySpeaker;
+  public AudioClip pelletCollectedSound;
+
   public UnityEngine.AI.NavMeshAgent enemy;
   public Transform Player;
 
@@ -30,6 +33,10 @@ public class PacMovementV2 : MonoBehaviour
   {
     rb = GetComponent<Rigidbody>();
     scoreScript = GameObject.Find("ScoreContainerCanvas").GetComponent<Score>();
+    proximitySpeaker = gameObject.AddComponent<AudioSource>();
+    proximitySpeaker.clip = pelletCollectedSound;
+    proximitySpeaker.volume = 0.65f; // 70% volume
+    proximitySpeaker.pitch = 0.5f;
   }
 
 void Update()
@@ -118,10 +125,12 @@ void Update()
   private void OnTriggerEnter(Collider Other) {
     if (Other.gameObject.CompareTag("Pellet")) {
       scoreScript.playerScoreINC(105);
+      proximitySpeaker.Play();
       Destroy(Other.gameObject);
       consumedPellets += 1;
     } else if (Other.gameObject.CompareTag("PowerOrb")) {
       scoreScript.playerScoreINC(277);
+      proximitySpeaker.Play();
       Destroy(Other.gameObject);
     }
   }
