@@ -85434,7 +85434,7 @@ MonoBehaviour:
   globalSpeaker: {fileID: 0}
   ArrivalHorn: {fileID: 8300000, guid: 256e0a0018f631543aa7c6735327130e, type: 3}
   footsteps: {fileID: 8300000, guid: 1d3cf8292ab915c4a803f26f68e36ca6, type: 3}
-  moveSpeed: 16
+  moveSpeed: 25
   runSpeedMultiplier: 5
   aniScaleSizeFloat: 16
   gameOverOn: 1
@@ -97256,13 +97256,13 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.1
-  m_Speed: 28
+  m_Speed: 35
   m_Acceleration: 10
   avoidancePriority: 61
   m_AngularSpeed: 120
   m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 0
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 1.95
   m_BaseOffset: 0
