@@ -16,8 +16,8 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator EnemyDrop() {
         while (enemyCount < 10) {
-            xPos = Random.Range(-30, -20);
-            zPos = Random.Range(20, 30);
+            xPos = Random.Range(-140, -160);
+            zPos = Random.Range(140, 160);
 
             Instantiate(enemy, new Vector3(xPos, 1, zPos), Quaternion.identity);
             yield return new WaitForSeconds(10f);
